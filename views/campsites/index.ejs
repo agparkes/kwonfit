@@ -1,0 +1,48 @@
+<% include ../partials/header %>
+    <!--<div class="container">-->
+    <!--<% if(currentUser && currentUser.isAdmin){ %>-->
+    <!--    <strong><p>You're an admin!</p></strong>-->
+    <!--<% }; %>-->
+        <header class="jumbotron">
+         <div class="container">
+             <h1><span class="glyphicon glyphicon-grain"></span> Welcome To KwonFit!</h1>
+             <p>View our hand-picked campsites from all over the world</p>
+             <p>
+                <a class="btn btn-primary btn-lg" href="/campsites/new">Add New Campsite</a>
+             </p>
+         </div>
+        </header>
+        
+        <div class="col-lg-12">
+        <!--<h3>Our Most Popular Campsites!</h3>-->
+            <div class="row text-center flex-wrap" id="campsite-grid">
+                <div class="col-md-12">
+                    <% if(noMatch !== null) { %>
+                    <h3><%= noMatch %></h3>
+                    <p>
+                    	<form action="/campsites" method="GET" class="form-inline">
+                    		<div class="form-group">
+                    			<input type="text" name="search" placeholder="Campsite search..." class="form-control">
+                    			<input type="submit" value="Search" class="btn btn-default">
+                    		</div>
+                    	</form>
+                    </p>
+                    <% } %>
+                 </div>
+                <% campsites.forEach(function(campsite){ %>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="thumbnail">
+                            <img src="<%= campsite.image %>">
+                            <div class="caption">
+                                <h4><%= campsite.name %></h4>
+                            </div>
+                            <p>
+                                <a href="/campsites/<%= campsite._id %>" class="btn btn-primary">More Info</a>
+                            </p>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    <!--</div>-->
+<% include ../partials/footer %>
