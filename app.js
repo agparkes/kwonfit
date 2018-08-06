@@ -21,9 +21,6 @@ let commentRoutes       = require("./routes/comments"),
     indexRoutes         = require("./routes/index");
 
 // == CONNECT TO DATABASE ==
-// let url = (process.env.DATABASEURL, {useNewUrlParser: true}) || "mongodb://localhost:27017/kwonfit";
-// mongoose.connect(url);
-// mongoose.connect(process.env.DATABASEURL);
 mongoose.connect(process.env.DATABASEURL, {useNewUrlParser: true}) || "mongodb://localhost:27017/kwonfit";
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
