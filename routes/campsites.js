@@ -4,6 +4,30 @@ let Campsite = require("../models/campsite");
 let Comment = require("../models/comment");
 let middleware = require("../middleware");
 // let geocoder = require('geocoder');
+
+// == CONFIGURE CLOUDINARY ==
+var multer = require('multer');
+var storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+let upload = multer({ storage: storage, fileFilter: imageFilter});
+
+let cloudinary = require('cloudinary');
+cloudinary.config({ 
+  cloud_name: 'agparkes', 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 // =====================================
 let NodeGeocoder = require('node-geocoder');
  
@@ -69,7 +93,8 @@ router.get("/", function(req, res){
 // });
 
 //CREATE - add new campsite to DB
-router.post("/", isLoggedIn, isSafe, function(req, res){
+// router.post("/", isLoggedIn, isSafe, function(req, res){
+router.post("/", isLoggedIn, upload.single("image"), function(req, res) {
   // get data from form and add to campsites array
   let name = req.body.name;
   let image = req.body.image;
@@ -98,6 +123,22 @@ router.post("/", isLoggedIn, isSafe, function(req, res){
             console.log(newlyCreated);
             res.redirect("/campsites");
         }
+    });
+        cloudinary.uploader.upload(req.file.path, function(result) {
+        // add cloudinary url for the image to the campsite object under image property
+        req.body.campsite.image = result.secure_url;
+        // add author to campsite
+        req.body.campsite.author = {
+        id: req.user._id,
+        username: req.user.username
+        };
+        Campsite.create(req.body.campsite, function(err, campsite) {
+        if (err) {
+          req.flash("error", err.message);
+          return res.redirect('back');
+        }
+        res.redirect("/campsites/" + campsite.id);
+      });
     });
   });
 });
