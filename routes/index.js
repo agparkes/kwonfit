@@ -27,7 +27,6 @@ router.post("/register", function(req, res){
         avatar: req.body.avatar
       });
     if(req.body.adminCode === process.env.ADMIN_CODE) {
-    // if(req.body.adminCode === 'secretcode123') {
       newUser.isAdmin = true;
     }
 
@@ -95,15 +94,15 @@ router.post('/forgot', function(req, res, next) {
     },
     function(token, user, done) {
       let smtpTransport = nodemailer.createTransport({
-        service: 'Gmail', 
+        service: "Gmail", 
         auth: {
-          user: 'aparkes413@gmail.com',
+          user: "aparkes413@gmail.com",
           pass: process.env.GMAIL_PW
         }
       });
       let mailOptions = {
         to: user.email,
-        from: 'aparkes413@gmail.com',
+        from: "aparkes413@gmail.com",
         subject: 'Node.js Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
