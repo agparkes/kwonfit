@@ -3,15 +3,16 @@
     <div class="row">
         <h1 style="text-align: center">Edit <%= campsite.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/campsites/<%=campsite._id%>?_method=PUT" method="POST">
+            <form action="/campsites/<%=campsite._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input class="form-control" type="text" name="name" id="name" value="<%= campsite.name %>">
                 </div>
                 <div class="form-group">
-                    <label for="image">Image Url</label>
-                    <input class="form-control" type="text" name="image" id="image" pattern="^https:\/\/images\.unsplash\.com\/.*" title="Only images from images.unsplash.com allowed. See link below for instructions." placeholder="https://images.unsplash.com/..." value="<%= campsite.image %>" required>
-                    <small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>
+                    <label for="image">Image</label>
+                    <input class="form-control" type="file" name="image" id="image" accept="image/*">
+                    <!--<input class="form-control" type="text" name="image" id="image" pattern="^https:\/\/images\.unsplash\.com\/.*" title="Only images from images.unsplash.com allowed. See link below for instructions." placeholder="https://images.unsplash.com/..." value="<%= campsite.image %>" required>-->
+                    <!--<small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>-->
                 </div>
                 <div class="form-group">
                     <label for="cost">Cost</label>
