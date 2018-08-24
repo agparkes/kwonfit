@@ -97,10 +97,11 @@ router.get("/", function (req, res) {
 //CREATE - add new campsite to DB
 router.post("/", isLoggedIn, upload.single("image"), function (req, res) {
     // get data from form and add to campsites array
-    var name = req.body.name;
-    var image = req.body.image;
-    var desc = req.body.description;
-    var author = {
+    let name = req.body.name;
+    let image = req.body.image;
+    let cost = req.body.cost;
+    let desc = req.body.description;
+    let author = {
         id: req.user._id,
         username: req.user.username
     };
@@ -115,6 +116,7 @@ router.post("/", isLoggedIn, upload.single("image"), function (req, res) {
         let newCampsite = {
             name: name,
             image: image,
+            cost: cost,
             description: desc,
             author: author,
             location: location,
