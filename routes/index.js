@@ -53,7 +53,7 @@ router.post("/login", passport.authenticate("local",
         successRedirect: "/campsites",
         failureRedirect: "/login",
         failureFlash: true,
-        successFlash: 'Welcome to Kwon-FitCamp!'
+        successFlash: 'Welcome to KwonFit!'
     }), function(req, res){
 });
 
@@ -94,19 +94,19 @@ router.post('/forgot', function(req, res, next) {
     },
     function(token, user, done) {
       let smtpTransport = nodemailer.createTransport({
-        service: "Gmail", 
+        service: "Gmail",
         auth: {
-          user: "aparkes413@gmail.com",
-          pass: process.env.GMAIL_PW
+          user: process.env.GMAIL,
+          pass: process.env.GMAILPW
         }
       });
       let mailOptions = {
         to: user.email,
-        from: "aparkes413@gmail.com",
-        subject: 'Node.js Password Reset',
+        from: '"KwonFit" process.env.GMAIL',
+        subject: 'KwonFit Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+          'https://' + req.headers.host + '/reset/' + token + '\n\n' +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
@@ -160,13 +160,13 @@ router.post('/reset/:token', function(req, res) {
       let smtpTransport = nodemailer.createTransport({
         service: 'Gmail', 
         auth: {
-          user: 'aparkes413@gmail.com',
+          user: process.env.GMAIL,
           pass: process.env.GMAILPW
         }
       });
       let mailOptions = {
         to: user.email,
-        from: 'aparkes413@mail.com',
+        from: "KwonFit",
         subject: 'Your password has been changed',
         text: 'Hello,\n\n' +
           'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
