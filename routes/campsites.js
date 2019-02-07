@@ -1,36 +1,36 @@
-let express = require("express");
-let router = express.Router();
-let Campsite = require("../models/campsite");
-let middleware = require("../middleware");
-let NodeGeocoder = require("node-geocoder");
+const express = require("express");
+const router = express.Router();
+const Campsite = require("../models/campsite");
+const middleware = require("../middleware");
+const NodeGeocoder = require("node-geocoder");
 
 // == CONFIGURE CLOUDINARY ==
-let multer = require('multer');
-let storage = multer.diskStorage({
+const multer = require('multer');
+const storage = multer.diskStorage({
     filename: function (req, file, callback) {
         callback(null, Date.now() + file.originalname);
     }
 });
-let imageFilter = function (req, file, cb) {
+const imageFilter = function (req, file, cb) {
     // accept image files only
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
         return cb(new Error('Only image files are allowed!'), false);
     }
     cb(null, true);
 };
-let upload = multer({
+const upload = multer({
     storage: storage,
     fileFilter: imageFilter
 });
 
-let cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary');
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-let {
+const {
     isLoggedIn,
     checkUserCampsite,
     // checkUserComment,
@@ -39,14 +39,14 @@ let {
 } = middleware;
 
 
-let options = {
+const options = {
     provider: "google",
     httpAdapter: "https",
     api_Key: process.env.GEOCODER_API_KEY,
     formatter: null
 };
 
-let geocoder = NodeGeocoder(options);
+const geocoder = NodeGeocoder(options);
 
 // Define escapeRegex function for search feature
 function escapeRegex(text) {
@@ -55,7 +55,7 @@ function escapeRegex(text) {
 
 //INDEX - show all campsites
 router.get("/", function (req, res) {
-    let noMatch = null;
+    const noMatch = null;
     // eval(require("locus"));
     // if(req.query.search && req.xhr) {
     if (req.query.search) { //if req.query.search exists, means if someone is searching for something
@@ -97,11 +97,11 @@ router.get("/", function (req, res) {
 //CREATE - add new campsite to DB
 router.post("/", isLoggedIn, upload.single("image"), function (req, res) {
     // get data from form and add to campsites array
-    let name = req.body.name;
-    let image = req.body.image;
-    let cost = req.body.cost;
-    let desc = req.body.description;
-    let author = {
+    const name = req.body.name;
+    const image = req.body.image;
+    const cost = req.body.cost;
+    const desc = req.body.description;
+    const author = {
         id: req.user._id,
         username: req.user.username
     };
@@ -110,10 +110,10 @@ router.post("/", isLoggedIn, upload.single("image"), function (req, res) {
             req.flash('error', 'Invalid address');
             return res.redirect('back');
         }
-        let lat = data[0].latitude;
-        let lng = data[0].longitude;
-        let location = data[0].formattedAddress;
-        let newCampsite = {
+        const lat = data[0].latitude;
+        const lng = data[0].longitude;
+        const location = data[0].formattedAddress;
+        const newCampsite = {
             name: name,
             image: image,
             cost: cost,
@@ -197,7 +197,7 @@ router.put("/:id", upload.single('image'), function (req, res) {
             if (req.file) {
                 try {
                     await cloudinary.v2.uploader.destroy(campsite.imageId);
-                    let result = await cloudinary.v2.uploader.upload(req.file.path);
+                    const result = await cloudinary.v2.uploader.upload(req.file.path);
                     campsite.imageId = result.public_id;
                     campsite.image = result.secure_url;
                 } catch (err) {
@@ -224,7 +224,7 @@ router.delete('/:id', function (req, res) {
         try {
             await cloudinary.v2.uploader.destroy(campsite.imageId);
             campsite.remove();
-            req.flash('success', 'Campsite deleted successfully!');
+            req.flash('success', 'Campsite deconsted successfully!');
             res.redirect('/campsites');
         } catch (err) {
             if (err) {

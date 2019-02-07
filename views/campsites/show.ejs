@@ -27,7 +27,7 @@
         <form action="/campsites/<%= campsite._id %>?_method=DELETE" method="POST" class="delete-form">
           <button class="btn btn-danger">Delete</button>
         </form>
-        <% } %>
+        <% } %> 
       </div>
     </div>
     <div class="well">
@@ -61,23 +61,23 @@
 <!--Google Maps Scripts-->
 <script>
   function initMap() {
-    let lat = <%= campsite.lat %>;
-    let lng = <%= campsite.lng %>;
-    let center = {lat: lat, lng: lng };
-    let map = new google.maps.Map(document.getElementById('map'), {
+    const lat = <%= campsite.lat %>;
+    const lng = <%= campsite.lng %>;
+    const center = {lat: lat, lng: lng };
+    const map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: center,
         scrollwheel: false
     });
-    let contentString = `
+    const contentString = `
       <strong><%= campsite.name %><br />
       <%= campsite.location %></strong>
       <p><%= campsite.description %></p>
     `
-    let infowindow = new google.maps.InfoWindow({
+    const infowindow = new google.maps.InfoWindow({
       content: contentString
     });
-    let marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
         position: center,
         map: map
     });

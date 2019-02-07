@@ -1,11 +1,11 @@
-let express = require("express");
-let router  = express.Router();
-let passport = require("passport");
-let User = require("../models/user");
-let Campsite = require("../models/campsite");
-let async = require("async");
-let nodemailer = require("nodemailer");
-let crypto = require("crypto");
+const express = require("express");
+const router  = express.Router();
+const passport = require("passport");
+const User = require("../models/user");
+const Campsite = require("../models/campsite");
+const async = require("async");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
 // == INDEX ROUTE OF APPLICATION ==
 router.get("/", function(req, res){
@@ -19,7 +19,7 @@ router.get("/register", function(req, res){
 
 // == HANDLE SIGNUP LOGIC == 
 router.post("/register", function(req, res){
-    let newUser = new User({
+    const newUser = new User({
         username: req.body.username,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -73,7 +73,7 @@ router.post('/forgot', function(req, res, next) {
   async.waterfall([
     function(done) {
       crypto.randomBytes(20, function(err, buf) {
-        let token = buf.toString('hex');
+        const token = buf.toString('hex');
         done(err, token);
       });
     },
@@ -93,19 +93,19 @@ router.post('/forgot', function(req, res, next) {
       });
     },
     function(token, user, done) {
-      let smtpTransport = nodemailer.createTransport({
+      const smtpTransport = nodemailer.createTransport({
         service: "Gmail",
         auth: {
           user: process.env.GMAIL,
           pass: process.env.GMAILPW
         }
       });
-      let mailOptions = {
+      const mailOptions = {
         to: user.email,
         from: '"KwonFit" process.env.GMAIL',
         subject: 'KwonFit Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'Please click on the following link, or paste this into your browser to compconste the process:\n\n' +
           'https://' + req.headers.host + '/reset/' + token + '\n\n' +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
@@ -157,14 +157,14 @@ router.post('/reset/:token', function(req, res) {
       });
     },
     function(user, done) {
-      let smtpTransport = nodemailer.createTransport({
+      const smtpTransport = nodemailer.createTransport({
         service: 'Gmail', 
         auth: {
           user: process.env.GMAIL,
           pass: process.env.GMAILPW
         }
       });
-      let mailOptions = {
+      const mailOptions = {
         to: user.email,
         from: "KwonFit",
         subject: 'Your password has been changed',

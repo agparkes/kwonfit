@@ -1,7 +1,7 @@
-let mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 // == SETUP SCHEMA ==
-let campsiteSchema = new mongoose.Schema({
+const campsiteSchema = new mongoose.Schema({
    name: String,
    image: String,
    imageId: String,

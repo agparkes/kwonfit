@@ -1,6 +1,6 @@
-let mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-// let commentSchema = mongoose.Schema({
+// const commentSchema = mongoose.Schema({
 //     text: String,
 //     author: {
 //         id: {
@@ -11,7 +11,7 @@ let mongoose = require("mongoose");
 //     }
 // });
 
-let commentSchema = mongoose.Schema({
+const commentSchema = mongoose.Schema({
     text: String,
     createdAt: { type: Date, default: Date.now },
     author: {

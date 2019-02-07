@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 // == SETUP DEPENDECIES FOR APPLICATION ==
-let express             = require("express"),
+const express             = require("express"),
     app                 = express(),
     bodyParser          = require("body-parser"),
     mongoose            = require("mongoose"),
@@ -16,7 +16,7 @@ let express             = require("express"),
     // seedDB              = require("./seeds");
     
 // == REQUIRING ROUTES ==
-let commentRoutes       = require("./routes/comments"),
+const commentRoutes       = require("./routes/comments"),
     campsiteRoutes      = require("./routes/campsites"),
     indexRoutes         = require("./routes/index");
 
