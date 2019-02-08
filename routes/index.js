@@ -12,7 +12,7 @@ router.get("/", function(req, res){
     res.render("landing", {page: "landing"});
 });
 
-// ==SHOW REGISTER FORM ==
+// == SHOW REGISTER FORM ==
 router.get("/register", function(req, res){
    res.render("register", {page: 'register'}); 
 });
@@ -42,12 +42,12 @@ router.post("/register", function(req, res){
     });
 });
 
-//show login form
+// == SHOW LOGIN FORM ==
 router.get("/login", function(req, res){
    res.render("login", {page: 'login'}); 
 });
 
-// handling login logic
+// == HANDLING LOGIN LOGIC ==
 router.post("/login", passport.authenticate("local", 
     {
         successRedirect: "/campsites",
@@ -57,18 +57,19 @@ router.post("/login", passport.authenticate("local",
     }), function(req, res){
 });
 
-// logout route
+// == LOGOUT ROUTE ==
 router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "See you later!");
    res.redirect("/campsites");
 });
 
-// forgot password
+// == FORGOT PASSWORD ==
 router.get('/forgot', function(req, res) {
   res.render('forgot');
 });
 
+// == HANDLING FORGOT LOGIC ==
 router.post('/forgot', function(req, res, next) {
   async.waterfall([
     function(done) {
@@ -181,7 +182,7 @@ router.post('/reset/:token', function(req, res) {
   });
 });
 
-// USER PROFILE
+// == USER PROFILE ==
 router.get("/users/:id", function(req, res) {
   User.findById(req.params.id, function(err, foundUser) {
     if(err) {
@@ -197,6 +198,11 @@ router.get("/users/:id", function(req, res) {
     });
   });
 });
+
+// == 404 ROUTE OF APPLICATION ==
+// router.get("/*", function(req, res){
+//     res.render("404", {page: "404"});
+// });
 
 
 module.exports = router;

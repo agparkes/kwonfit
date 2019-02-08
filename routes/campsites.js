@@ -53,7 +53,7 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
-//INDEX - show all campsites
+// == INDEX - show all campsites
 router.get("/", function (req, res) {
     const noMatch = null;
     // eval(require("locus"));
@@ -94,7 +94,7 @@ router.get("/", function (req, res) {
     }
 });
 
-//CREATE - add new campsite to DB
+// == CREATE - add new campsite to DB
 router.post("/", isLoggedIn, upload.single("image"), function (req, res) {
     // get data from form and add to campsites array
     const name = req.body.name;
@@ -151,12 +151,12 @@ router.post("/", isLoggedIn, upload.single("image"), function (req, res) {
     });
 });
 
-//NEW - show form to create new campsite
+// == NEW - show form to create new campsite
 router.get("/new", isLoggedIn, function (req, res) {
     res.render("campsites/new");
 });
 
-// SHOW - shows more info about one campsite
+// == SHOW - shows more info about one campsite
 router.get("/:id", function (req, res) {
     //find the campsite with provided ID
     Campsite.findById(req.params.id).populate("comments").exec(function (err, foundCampsite) {
@@ -172,7 +172,7 @@ router.get("/:id", function (req, res) {
     });
 });
 
-// EDIT - shows edit form for a campsite
+// == EDIT - shows edit form for a campsite
 router.get("/:id/edit", isLoggedIn, checkUserCampsite, function (req, res) {
     console.log("IN EDIT!");
     //find the campsite with provided ID
