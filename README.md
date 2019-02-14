@@ -1,7 +1,7 @@
 # kwonfit is a dynamic site.
 # Stack used
   - Backend: Nodejs, Express and MongoDB
-  - Frontend: html, js and css
+  - Frontend: HTML, JS and CSS
 # Backend functionlity
   - Check if a use is logged in
   - Signed up a user
