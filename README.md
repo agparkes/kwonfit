@@ -2,7 +2,7 @@
 # Stack used
   - Backend: Nodejs, Express and MongoDB
   - Frontend: HTML, JS and CSS
-# Backend functionlity
+# Backend functionality
   - Check if a use is logged in
     - Packages to authenticate user:
       - Passport
