@@ -15,7 +15,3 @@
     - Create new comment
     - Remove post from database
   - Figure out what html css and js to send to the user
-  
-  
-  
-  
